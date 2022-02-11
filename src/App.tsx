@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./styles/styles.scss";
+import Header from "./components/Header";
+import SearchMovie from "./components/SearchMovie";
+import MoviesList from "./components/MoviesList";
+import Footer from "./components/Footer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+type Props = {};
+
+const App: React.FC = (props: Props) => {
+    return (
+        <div className="app">
+            <Header />
+            <main>
+                <div className="container">
+                    <SearchMovie />
+                    <div className="movie-sort__actions">
+                        <button className="btn">Sort Descending</button>
+                    </div>
+                    <MoviesList />
+                </div>
+            </main>
+            <Footer />
+        </div>
+    );
+};
 
 export default App;
