@@ -11,6 +11,7 @@ export interface MoviesState {
     moviesSorted: Movie[] | null;
     loading: boolean;
     error: null | string;
+    sortingDescending: boolean;
 }
 export enum MoviesActionTypes {
     FETCH_MOVIES = "FETCH_MOVIES",

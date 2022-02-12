@@ -14,9 +14,14 @@ const App: React.FC = (props: Props) => {
         useTypedSelector((state) => state.movies);
 
     const { fetchMovies } = useActions();
+    const { sortMoviesByOrder } = useActions();
 
     const handleMovieSearch = (title: string, year: string, plot: string) => {
         fetchMovies(title, year, plot);
+    };
+
+    const handleSortMovies = () => {
+        sortMoviesByOrder(movies, sortingDescending);
     };
 
     const loadingElement = loading && (
@@ -38,7 +43,7 @@ const App: React.FC = (props: Props) => {
                 <div className="container">
                     <SearchMovie onMovieSearch={handleMovieSearch} />
                     <div className="movie-sort__actions">
-                        <button className="btn">
+                        <button className="btn" onClick={handleSortMovies}>
                             Sort{" "}
                             {sortingDescending ? "Descending" : "Ascending"}
                         </button>

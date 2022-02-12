@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "redux";
-import { MoviesAction, MoviesActionTypes } from "../../types/movies";
+import { Movie, MoviesAction, MoviesActionTypes } from "../../types/movies";
 import { movieAPIKey, movieAPIName } from "../../utils/constants";
 
 export const fetchMovies = (title: string, year: string, plot: string) => {
@@ -9,7 +9,6 @@ export const fetchMovies = (title: string, year: string, plot: string) => {
             dispatch({ type: MoviesActionTypes.FETCH_MOVIES });
             const fullUrlToFetchMovies = getCorrectUrl(title, year, plot);
             const response = await axios.get(fullUrlToFetchMovies);
-            console.log("response", response);
 
             if (response.data.Error) {
                 throw new Error(response.data.Error);
@@ -27,7 +26,29 @@ export const fetchMovies = (title: string, year: string, plot: string) => {
     };
 };
 
-const getCorrectUrl = (title: string, year: string, plot: string): string => {
+export const sortMoviesByOrder = (
+    movies: Movie[],
+    isSortingDescending: boolean
+) => {
+    return (dispatch: Dispatch<MoviesAction>) => {
+        let moviesSorted: Movie[];
+        if (isSortingDescending) {
+            moviesSorted = sortMovies(movies, isSortingDescending);
+            dispatch({
+                type: MoviesActionTypes.SORT_MOVIES_DESCENDING,
+                payload: moviesSorted,
+            });
+        } else {
+            moviesSorted = sortMovies(movies, isSortingDescending);
+            dispatch({
+                type: MoviesActionTypes.SORT_MOVIES_ASCENDING,
+                payload: moviesSorted,
+            });
+        }
+    };
+};
+
+function getCorrectUrl(title: string, year: string, plot: string): string {
     let fullUrlToFetchMovies: string;
     if (title.trim() === "") {
         throw new Error("Invalid title...");
@@ -54,4 +75,30 @@ const getCorrectUrl = (title: string, year: string, plot: string): string => {
     }
 
     return fullUrlToFetchMovies;
-};
+}
+
+function sortAscendingFunc(firstParam: Movie, secondParam: Movie): number {
+    return firstParam.Title < secondParam.Title
+        ? -1
+        : firstParam.Title > secondParam.Title
+        ? 1
+        : 0;
+}
+
+function sortDescendingFunc(firstParam: Movie, secondParam: Movie): number {
+    return firstParam.Title < secondParam.Title
+        ? 1
+        : firstParam.Title > secondParam.Title
+        ? -1
+        : 0;
+}
+
+function sortMovies(movies: Movie[], isSortingDescending: boolean): Movie[] {
+    let sortedMovies: Movie[];
+    if (isSortingDescending) {
+        sortedMovies = Array.from(movies).sort(sortDescendingFunc);
+    } else {
+        sortedMovies = Array.from(movies).sort(sortAscendingFunc);
+    }
+    return sortedMovies;
+}
