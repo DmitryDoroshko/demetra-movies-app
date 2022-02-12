@@ -16,8 +16,20 @@ const App: React.FC = (props: Props) => {
     const { fetchMovies } = useActions();
 
     const handleMovieSearch = (title: string, year: string, plot: string) => {
-        fetchMovies(title, parseInt(year), plot);
+        fetchMovies(title, year, plot);
     };
+
+    const loadingElement = loading && (
+        <p style={{ textAlign: "center", marginTop: "1.5rem" }}>
+            The movies are loading...
+        </p>
+    );
+
+    const errorElement = error ? (
+        <p style={{ textAlign: "center", marginTop: "1.5rem" }}>{error}</p>
+    ) : (
+        ""
+    );
 
     return (
         <div className="app">
@@ -31,7 +43,9 @@ const App: React.FC = (props: Props) => {
                             {sortingDescending ? "Descending" : "Ascending"}
                         </button>
                     </div>
-                    <MoviesList />
+                    {loadingElement}
+                    {errorElement}
+                    <MoviesList movies={moviesSorted} />
                 </div>
             </main>
             <Footer />

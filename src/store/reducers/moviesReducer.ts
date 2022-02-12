@@ -1,4 +1,5 @@
 import {
+    Movie,
     MoviesAction,
     MoviesActionTypes,
     MoviesState,
@@ -10,6 +11,32 @@ const initialState = {
     error: null,
     moviesSorted: [],
     sortingDescending: true,
+};
+
+const sortAscendingFunc = (firstParam: Movie, secondParam: Movie): number => {
+    return firstParam.Title < secondParam.Title
+        ? -1
+        : firstParam.Title > secondParam.Title
+        ? 1
+        : 0;
+};
+
+const sortDescendingFunc = (firstParam: Movie, secondParam: Movie): number => {
+    return firstParam.Title < secondParam.Title
+        ? 1
+        : firstParam.Title > secondParam.Title
+        ? -1
+        : 0;
+};
+
+const sortMovies = (movies: Movie[], isSortingDescending: boolean): Movie[] => {
+    let sortedMovies: Movie[];
+    if (isSortingDescending) {
+        sortedMovies = Array.from(movies).sort(sortDescendingFunc);
+    } else {
+        sortedMovies = Array.from(movies).sort(sortAscendingFunc);
+    }
+    return sortedMovies;
 };
 
 export const moviesReducer = (
@@ -39,9 +66,12 @@ export const moviesReducer = (
                 loading: false,
                 error: null,
                 movies: action.payload,
-                moviesSorted: action.payload,
+                moviesSorted: sortMovies(
+                    action.payload,
+                    state.sortingDescending
+                ),
             };
-            
+
         default:
             return state;
     }

@@ -1,13 +1,9 @@
-type Movie = {
-    title: string;
-    year: number;
-    imdbRating: number;
-    released: string;
-    genre: string;
-    director: string;
-    language: string;
+export type Movie = {
+    Title: string;
+    Year: number;
     imdbID: string;
-    poster: string;
+    Type: string;
+    Poster: string;
 };
 
 export interface MoviesState {
