@@ -48,6 +48,12 @@ export const sortMoviesByOrder = (
     };
 };
 
+export const reset = () => {
+    return (dispatch: Dispatch<MoviesAction>) => {
+        dispatch({ type: MoviesActionTypes.RESET });
+    };
+};
+
 function getCorrectUrl(title: string, year: string, plot: string): string {
     let fullUrlToFetchMovies: string;
     if (title.trim() === "") {

@@ -53,6 +53,9 @@ export const moviesReducer = (
                 moviesSorted: action.payload,
                 sortingDescending: !state.sortingDescending,
             };
+        case MoviesActionTypes.RESET: {
+            return initialState;
+        }
         default:
             return state;
     }

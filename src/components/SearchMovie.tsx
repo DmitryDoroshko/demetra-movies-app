@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useActions } from "../hooks/useActions";
 
 type Props = {
     onMovieSearch: (title: string, year: string, plot: string) => void;
@@ -8,6 +9,8 @@ const SearchMovie = (props: Props) => {
     const [movieTitle, setMovieTitle] = useState<string>("");
     const [movieYear, setMovieYear] = useState<string>("");
     const [moviePlot, setMoviePlot] = useState<string>("");
+
+    const { reset } = useActions();
 
     const handleMovieTitleChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -30,6 +33,14 @@ const SearchMovie = (props: Props) => {
     const handleFormSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         props.onMovieSearch(movieTitle, movieYear, moviePlot);
+    };
+
+    const handleReset = (event: React.FormEvent) => {
+        event.preventDefault();
+        setMovieTitle("");
+        setMovieYear("");
+        setMoviePlot("");
+        reset();
     };
 
     return (
@@ -77,7 +88,9 @@ const SearchMovie = (props: Props) => {
                     >
                         Search
                     </button>
-                    <button className="btn btn--reset">Reset</button>
+                    <button className="btn btn--reset" onClick={handleReset}>
+                        Reset
+                    </button>
                 </div>
             </form>
         </section>

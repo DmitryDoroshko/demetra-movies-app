@@ -19,6 +19,7 @@ export enum MoviesActionTypes {
     FETCH_MOVIES_ERROR = "FETCH_MOVIES_ERROR",
     SORT_MOVIES_ASCENDING = "SORT_MOVIES_ASCENDING",
     SORT_MOVIES_DESCENDING = "SORT_MOVIES_DESCENDING",
+    RESET = "RESET",
 }
 
 interface FetchMoviesAction {
@@ -45,9 +46,14 @@ interface SortMoviesDescending {
     payload: Movie[];
 }
 
+interface Reset {
+    type: MoviesActionTypes.RESET;
+}
+
 export type MoviesAction =
     | FetchMoviesAction
     | FetchMoviesSuccessAction
     | FetchMoviesErrorAction
     | SortMoviesAscending
-    | SortMoviesDescending;
+    | SortMoviesDescending
+    | Reset;
