@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/demetra-movies-app/static/css/main.3000e06a.css",
+    "main.js": "/demetra-movies-app/static/js/main.e10e6469.js",
+    "index.html": "/demetra-movies-app/index.html",
+    "main.3000e06a.css.map": "/demetra-movies-app/static/css/main.3000e06a.css.map",
+    "main.e10e6469.js.map": "/demetra-movies-app/static/js/main.e10e6469.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3000e06a.css",
+    "static/js/main.e10e6469.js"
+  ]
+}
