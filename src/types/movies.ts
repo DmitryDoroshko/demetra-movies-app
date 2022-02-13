@@ -4,6 +4,13 @@ export type Movie = {
     imdbID: string;
     Type: string;
     Poster: string;
+    Released?: string;
+    Runtime?: string;
+    Genre?: string;
+    Director?: string;
+    Writer?: string;
+    Language?: string;
+    Country?: string;
 };
 
 export interface MoviesState {
@@ -12,11 +19,15 @@ export interface MoviesState {
     loading: boolean;
     error: null | string;
     sortingDescending: boolean;
+    movieFetched: Movie | null;
 }
 export enum MoviesActionTypes {
     FETCH_MOVIES = "FETCH_MOVIES",
     FETCH_MOVIES_SUCCESS = "FETCH_MOVIES_SUCCESS",
     FETCH_MOVIES_ERROR = "FETCH_MOVIES_ERROR",
+    FETCH_SINGLE_MOVIE_BY_ID = "FETCH_SINGLE_MOVIE_BY_ID",
+    FETCH_SINGLE_MOVIE_BY_ID_SUCCESS = "FETCH_SINGLE_MOVIE_BY_ID_SUCCESS",
+    FETCH_SINGLE_MOVIE_BY_ID_ERROR = "FETCH_SINGLE_MOVIE_BY_ID_ERROR",
     SORT_MOVIES_ASCENDING = "SORT_MOVIES_ASCENDING",
     SORT_MOVIES_DESCENDING = "SORT_MOVIES_DESCENDING",
     RESET = "RESET",
@@ -50,10 +61,25 @@ interface Reset {
     type: MoviesActionTypes.RESET;
 }
 
+interface FetchSingleMovieById {
+    type: MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID;
+}
+interface FetchSingleMovieByIdSuccess {
+    type: MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID_SUCCESS;
+    payload: Movie;
+}
+interface FetchSingleMovieByIdError {
+    type: MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID_ERROR;
+    payload: string;
+}
+
 export type MoviesAction =
     | FetchMoviesAction
     | FetchMoviesSuccessAction
     | FetchMoviesErrorAction
     | SortMoviesAscending
     | SortMoviesDescending
-    | Reset;
+    | Reset
+    | FetchSingleMovieById
+    | FetchSingleMovieByIdSuccess
+    | FetchSingleMovieByIdError;

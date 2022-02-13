@@ -7,7 +7,11 @@ export const fetchMovies = (title: string, year: string, plot: string) => {
     return async (dispatch: Dispatch<MoviesAction>) => {
         try {
             dispatch({ type: MoviesActionTypes.FETCH_MOVIES });
-            const fullUrlToFetchMovies = getCorrectUrl(title, year, plot);
+            const fullUrlToFetchMovies = getCorrectUrlForFetchingMovies(
+                title,
+                year,
+                plot
+            );
             const response = await axios.get(fullUrlToFetchMovies);
 
             if (response.data.Error) {
@@ -25,6 +29,40 @@ export const fetchMovies = (title: string, year: string, plot: string) => {
         }
     };
 };
+
+export const fetchSingleMovieById = (id: string) => {
+    return async (dispatch: Dispatch<MoviesAction>) => {
+        try {
+            dispatch({ type: MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID });
+
+            const fullUrlToFetchSingleMovie = getUrlToFetchSingleMovie(id);
+
+            const response = await axios.get(fullUrlToFetchSingleMovie);
+
+            if (response.data.Error) {
+                throw new Error(response.data.Error);
+            }
+            dispatch({
+                type: MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID_SUCCESS,
+                payload: response.data,
+            });
+        } catch (error: any) {
+            dispatch({
+                type: MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID_ERROR,
+                payload: error.message,
+            });
+        }
+    };
+};
+
+function getUrlToFetchSingleMovie(id: string): string {
+    if (id.trim().length === 0) {
+        throw new Error("Invalid movie ID");
+    }
+
+    const url = `${movieAPIName}?apikey=5b4dccd9&i=${id}`;
+    return url;
+}
 
 export const sortMoviesByOrder = (
     movies: Movie[],
@@ -54,7 +92,11 @@ export const reset = () => {
     };
 };
 
-function getCorrectUrl(title: string, year: string, plot: string): string {
+function getCorrectUrlForFetchingMovies(
+    title: string,
+    year: string,
+    plot: string
+): string {
     let fullUrlToFetchMovies: string;
     if (title.trim() === "") {
         throw new Error("Invalid title...");

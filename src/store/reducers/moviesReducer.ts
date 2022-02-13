@@ -10,6 +10,7 @@ const initialState = {
     error: null,
     moviesSorted: [],
     sortingDescending: true,
+    movieFetched: null,
 };
 
 export const moviesReducer = (
@@ -56,6 +57,26 @@ export const moviesReducer = (
         case MoviesActionTypes.RESET: {
             return initialState;
         }
+        case MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID:
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        case MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+                movieFetched: null,
+            };
+        case MoviesActionTypes.FETCH_SINGLE_MOVIE_BY_ID_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: null,
+                movieFetched: action.payload,
+            };
         default:
             return state;
     }
