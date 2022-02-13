@@ -1,58 +1,32 @@
-import React, { useEffect } from "react";
+import React, { Fragment } from "react";
 import "./styles/styles.scss";
 import Header from "./components/Header";
 import SearchMovie from "./components/SearchMovie";
 import MoviesList from "./components/MoviesList";
 import Footer from "./components/Footer";
-import { useTypedSelector } from "./hooks/useTypedSelector";
-import { useActions } from "./hooks/useActions";
+import { Route, Routes } from "react-router-dom";
+import MoviesMain from "./pages/MoviesMain";
+import MovieSpecific from "./pages/MovieSpecific";
+import About from "./pages/About";
 
 type Props = {};
 
 const App: React.FC = (props: Props) => {
-    const { movies, moviesSorted, loading, error, sortingDescending } =
-        useTypedSelector((state) => state.movies);
-
-    const { fetchMovies } = useActions();
-    const { sortMoviesByOrder } = useActions();
-
-    const handleMovieSearch = (title: string, year: string, plot: string) => {
-        fetchMovies(title, year, plot);
-    };
-
-    const handleSortMovies = () => {
-        sortMoviesByOrder(movies, sortingDescending);
-    };
-
-    const loadingElement = loading && (
-        <p style={{ textAlign: "center", marginTop: "1.5rem" }}>
-            The movies are loading...
-        </p>
-    );
-
-    const errorElement = error ? (
-        <p style={{ textAlign: "center", marginTop: "1.5rem" }}>{error}</p>
-    ) : (
-        ""
-    );
-
     return (
         <div className="app">
             <Header />
-            <main>
-                <div className="container">
-                    <SearchMovie onMovieSearch={handleMovieSearch} />
-                    <div className="movie-sort__actions">
-                        <button className="btn" onClick={handleSortMovies}>
-                            Sort{" "}
-                            {sortingDescending ? "Descending" : "Ascending"}
-                        </button>
-                    </div>
-                    {loadingElement}
-                    {errorElement}
-                    <MoviesList movies={moviesSorted} />
-                </div>
-            </main>
+            <Routes>
+                <Route
+                    path="/movies"
+                    element={
+                        <Fragment>
+                            <MoviesMain />
+                        </Fragment>
+                    }
+                />
+                <Route path="/movies/:movieId" element={<MovieSpecific />} />
+                <Route path="/about" element={<About />} />
+            </Routes>
             <Footer />
         </div>
     );
