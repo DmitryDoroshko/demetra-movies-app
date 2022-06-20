@@ -1,11 +1,11 @@
 import React from "react";
 
 type Props = {
-    children: any;
+  children: any;
 };
 
 const Card = (props: Props) => {
-    return <div className="card">{props.children}</div>;
+  return <div className="card">{props.children}</div>;
 };
 
 export default Card;
