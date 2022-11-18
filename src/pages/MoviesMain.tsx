@@ -1,14 +1,14 @@
 import React from "react";
 import MoviesList from "../components/MoviesList";
 import SearchMovie from "../components/SearchMovie";
-import { useActions } from "../hooks/useActions";
-import { useTypedSelector } from "../hooks/useTypedSelector";
+import {useActions} from "../hooks/useActions";
+import {useTypedSelector} from "../hooks/useTypedSelector";
 
 const MoviesMain = () => {
-  const { movies, moviesSorted, loading, error, sortingDescending } =
+  const {movies, moviesSorted, loading, error, sortingDescending} =
     useTypedSelector((state) => state.movies);
-  const { fetchMovies } = useActions();
-  const { sortMoviesByOrder } = useActions();
+  const {fetchMovies} = useActions();
+  const {sortMoviesByOrder} = useActions();
 
   const handleMovieSearch = (title: string, year: string, plot: string) => {
     fetchMovies(title, year, plot);
@@ -19,13 +19,13 @@ const MoviesMain = () => {
   };
 
   const loadingElement = loading && (
-    <p style={{ textAlign: "center", marginTop: "1.5rem" }}>
+    <p style={{textAlign: "center", marginTop: "1.5rem"}}>
       The movies are loading...
     </p>
   );
 
   const errorElement = error ? (
-    <p style={{ textAlign: "center", marginTop: "1.5rem" }}>{error}</p>
+    <p style={{textAlign: "center", marginTop: "1.5rem"}}>{error}</p>
   ) : (
     ""
   );
@@ -33,7 +33,7 @@ const MoviesMain = () => {
   return (
     <main>
       <div className="container">
-        <SearchMovie onMovieSearch={handleMovieSearch} />
+        <SearchMovie onMovieSearch={handleMovieSearch}/>
         <div className="movie-sort__actions">
           <button className="btn" onClick={handleSortMovies}>
             Sort {sortingDescending ? "Descending" : "Ascending"}
@@ -41,7 +41,7 @@ const MoviesMain = () => {
         </div>
         {loadingElement}
         {errorElement}
-        <MoviesList movies={moviesSorted} />
+        <MoviesList movies={moviesSorted}/>
       </div>
     </main>
   );

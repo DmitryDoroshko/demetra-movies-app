@@ -6,8 +6,8 @@ const Footer = () => {
       <div className="container">
         <p className="footer__text">
           <span>Developed by &copy;</span>
-          <a href="https:/t.me/nosanctuary" className="footer__link">
-            Dmitry Doroshko
+          <a href="https:/t.me/DmytroDoroshko" className="footer__link">
+            Dmytro Doroshko
           </a>
           <span>with love!</span>
         </p>
